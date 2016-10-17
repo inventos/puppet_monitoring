@@ -40,8 +40,13 @@ func process_args() bool {
 	// else list of nodes in trouble
 	if opts.Status {
 		client := rpc.RPCClient{Conf: &settings}
-		fmt.Println(client.GetStatus(opts.Errors))
-		os.Exit(0)
+		result := client.GetStatus(opts.Errors)
+		fmt.Println(result)
+		if result != "OK" {
+			os.Exit(1)
+		} else {
+			os.Exit(0)
+		}
 	}
 
 	// remove all node data from master process
